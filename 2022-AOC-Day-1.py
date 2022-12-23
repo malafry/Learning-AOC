@@ -39,13 +39,12 @@ for i in range(len(cCList)):
         cCListValues.append(cCCountTemp)
         cCCountTemp = 0
 
-# Zipper cCList and cCDict into cCDictFinal
+## Zip cCList and cCDict into cCDictFinal
 cCDictFinal = dict(zip(cCDict, cCListValues)) # (key, value)
 
-# Find key with maximum value in cCDictFinal
+## Find key with maximum value in cCDictFinal
 max_val = max(cCDictFinal, key=cCDictFinal.get)
 print(max_val, cCDictFinal[max_val])
-
 
 ## Tests
 #print(cCList)
@@ -53,16 +52,3 @@ print(max_val, cCDictFinal[max_val])
 #print(cCDictFinal)
 #print('There are ' + str(cCCountElves) + ' elves.')
 #print('There are ' + str(len(cCListValues)) + ' bags of calories accounted for.')
-
-'''
-if cCountElves == len(cCListValues):
-    print('All elves accounted for.')
-else:
-    print('Not all elves are accounted for.')
-    if int(cCountElves) > len(cCListValues):
-        print('There are ' + int(cCountElves - len(cCListValues)) + ' more elves than data points!')
-    elif int(cCountElves) < len(cCListValues):
-        print('There are ' + abs(int(cCountElves - len(cCListValues))) + ' more data points than elves!') 
-    else:
-        break
-'''
