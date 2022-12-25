@@ -5,33 +5,28 @@
 ## Imports
 import openpyxl
 
-## Setup / Assignments
+## Setup and assignments
 wb = openpyxl.load_workbook(r'C:\Users\malaf\OneDrive\Desktop\Workspace\Code\Learning\2022 AOC\2022-AOC-Day-1-Puzzle-input.xlsx')
 ws = wb['Sheet1']
 
-## Setup / Structure and variables
-cCList = [] # Calorie count list
-cCListValues = []
-cCDict = {} # Calorie count dictionary
-cCDictFinal = {}
-cCCount = 0
-cCCountElves = 0 # Number of elves / number of keys
-cCCountTemp = 0
-
-## Import Excel data into Python for data manipulation
+## Import data into a Python list
+cCList = []
 for row in ws.values:
     for value in row:
         cCList.append(value)
-cCList.append(None) # Appending value to end of list to support Summation iterative
 
-## Determine the number of unique entities (i.e. elves)
+## Determine number of groups (determined by "None" data type, which are empty cells after each group)
+cCList.append(None)
 cCCountElves = cCList.count(None)
 
-## Number of elves added to the dictionary
+## Create data structure with a Python dictionary ("key" part of key-value pair)
+cCDict = {}
 for i in range(cCCountElves):
-    cCDict[i+1] = 0
+    cCDict[i+1] = 0 # +1 added to adjust keys, accounting for zero-based numbering (i.e. start at 1, not 0)
 
 ## Summation iterative
+cCListValues = []
+cCCountTemp = 0
 for i in range(len(cCList)):
     if type(cCList[i]) == int:
         cCCountTemp += cCList[i]
@@ -40,6 +35,7 @@ for i in range(len(cCList)):
         cCCountTemp = 0
 
 ## Zip cCList and cCDict into cCDictFinal
+cCDictFinal = {}
 cCDictFinal = dict(zip(cCDict, cCListValues)) # (key, value)
 
 ## Find key with maximum value in cCDictFinal
@@ -50,5 +46,3 @@ print(max_val, cCDictFinal[max_val])
 #print(cCList)
 #print(cCDict)
 #print(cCDictFinal)
-#print('There are ' + str(cCCountElves) + ' elves.')
-#print('There are ' + str(len(cCListValues)) + ' bags of calories accounted for.')
