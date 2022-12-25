@@ -35,7 +35,6 @@ for i in range(len(cCList)):
         cCCountTemp = 0
 
 ## Zip cCList and cCDict into cCDictFinal
-cCDictFinal = {}
 cCDictFinal = dict(zip(cCDict, cCListValues)) # (key, value)
 
 ## Find key with maximum value in cCDictFinal
