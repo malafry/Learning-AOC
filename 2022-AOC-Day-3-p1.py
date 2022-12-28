@@ -1,5 +1,5 @@
 # Advent of Code
-# Day 3
+# Day 3 - Part 1
 # Source: https://adventofcode.com/2022/day/3
 
 ## Imports
