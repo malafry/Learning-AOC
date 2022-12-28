@@ -1,5 +1,5 @@
 # Advent of Code
-# Day 2
+# Day 2 - Part 1
 # Source: https://adventofcode.com/2022/day/2
 
 ## Imports
