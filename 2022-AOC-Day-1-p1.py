@@ -1,5 +1,5 @@
 # Advent of Code
-# Day 1
+# Day 1 - Part 1
 # Source: https://adventofcode.com/2022/day/1
 
 ## Imports
@@ -38,7 +38,7 @@ for i in range(len(cCList)):
 cCDictFinal = dict(zip(cCDict, cCListValues)) # (key, value)
 
 ## Find key with maximum value in cCDictFinal
-max_val = max(cCDictFinal, key=cCDictFinal.get)
+max_val = max(cCDictFinal, key=cCDictFinal.get) # I don't get this yet
 print(max_val, cCDictFinal[max_val])
 
 ## Tests
