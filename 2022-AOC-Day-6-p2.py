@@ -1,6 +1,6 @@
 # Advent of Code
-# Day 6
-# Source: https://adventofcode.com/2022/day/6
+# Day 6 - Part 2
+# Source: https://adventofcode.com/2022/day/6#part2
 
 ## IMPORTS AND SETUP ##
 list = ''
