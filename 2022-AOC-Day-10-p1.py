@@ -28,13 +28,13 @@ class MyRegister:
 
             if self.instructions[i] == 'noop':
                 cycle += 1
-                self.registerValue += 0
                 self.workOutput[cycle] = self.registerValue
+                self.registerValue += 0                
 
             else:
                 cycle += 1
-                self.registerValue += 0
                 self.workOutput[cycle] = self.registerValue
+                self.registerValue += 0                
 
                 cycle += 1 
                 self.workOutput[cycle] = self.registerValue            
