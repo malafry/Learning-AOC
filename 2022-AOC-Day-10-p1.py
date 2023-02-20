@@ -1,6 +1,6 @@
 # Advent of Code
 # Day 10 - Part 1
-# Source: https://adventofcode.com/2022/day/9
+# Source: https://adventofcode.com/2022/day/10
 
 ## IMPORTS AND SETUP ##
 
