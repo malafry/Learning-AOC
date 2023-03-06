@@ -3,7 +3,7 @@
 # Source: https://adventofcode.com/2022/day/11
 
 import re
-import ast
+import math
 
 rawInstructions = []
 with open(r'C:\Users\malaf\OneDrive\Desktop\Workspace\Code\Learning\2022 AOC\2022-AOC-Day-11-Puzzle-input.txt') as file:
@@ -13,14 +13,12 @@ with open(r'C:\Users\malaf\OneDrive\Desktop\Workspace\Code\Learning\2022 AOC\202
 class InstructionsEngine:
     
     def __init__(self, rawInstructions):
-
         self.rawInstructions = rawInstructions
 
     def apportionInstructions(self):
-
         self.allInventory = []
-        self.allWorryOperation = []
-        self.allWorryTest = []
+        self.allWorryModification = []
+        self.allWorryTestValue = []
         self.allTrueMonkey = []
         self.allFalseMonkey = []
 
@@ -30,10 +28,10 @@ class InstructionsEngine:
                 self.allInventory.append(item)
             if 'Operation' in rawInstructions[i]:
                 item = rawInstructions[i][17:]
-                self.allWorryOperation.append(item)
+                self.allWorryModification.append(item)
             if 'Test' in rawInstructions[i]:
                 item = re.findall(r'\d+', rawInstructions[i])
-                self.allWorryTest.append(item)
+                self.allWorryTestValue.append(item)
             if 'If true' in rawInstructions[i]:
                 item = re.findall(r'\d+', rawInstructions[i])
                 self.allTrueMonkey.append(item)
@@ -46,39 +44,64 @@ instructions.apportionInstructions()
 
 class MonkeyClass:
 
-    def __init__(self, inventory, worryOperation, worryTest, trueMonkey, falseMonkey):
+    def __init__(self, inventory, worryModification, worryTestValue, trueMonkey, falseMonkey):
         self.inventory = inventory
-        self.worryOperation = worryOperation
-        self.worryTest = worryTest
-        self.trueMonkey = trueMonkey
-        self.falseMonkey = falseMonkey
+        self.worryModification = worryModification
+        self.worryTestValue = int(worryTestValue[0])
+        self.trueMonkey = int(trueMonkey[0])
+        self.falseMonkey = int(falseMonkey[0])
+
+        self.monkeyInspections = 0
+        self.updatedWorry = ''
 
     def initiateAction(self):
         for i in range(len(self.inventory)):
-            self.modifyWorry(self.inventory[i], self.worryOperation)
-            # self.testWorry(self.inventory[i], self.worryTest)
-            # self.moveItem(self.inventory[i], self.trueMonkey, self.falseMonkey)
+            self.monkeyInspections += 1
+            self.modifyWorry(self.inventory[i], self.worryModification)
+            self.moveItem()
+        self.inventory.clear()
 
-    def modifyWorry(self, inspectedItem, modification):
-        old = int(inspectedItem)
-        modifiedItem = ast.parse(modification)
-        new = exec(compile(modifiedItem, filename='', mode='exec'))
-        print(new)
-        print(ast.dump(modifiedItem))
+    def modifyWorry(self, inspectedItem, worryModification):
+        if 'old' in worryModification[5:]:
+            self.updatedWorry = eval('{} {} {}'.format(inspectedItem, worryModification[4], inspectedItem))
+        else:
+            self.updatedWorry = eval('{} {} {}'.format(inspectedItem, worryModification[4], worryModification[6]))   
 
-    def testWorry(self, inspectedItem):
-        pass
+        self.updatedWorry = math.floor(self.updatedWorry / 3)
 
-    def moveItem(self, inspectedItem):
-        pass
+    def moveItem(self):
+        if self.testWorry() == True:
+            monkeys[self.trueMonkey].inventory.append(self.updatedWorry)
+        if self.testWorry() == False:
+            monkeys[self.falseMonkey].inventory.append(self.updatedWorry)
+
+    def testWorry(self):
+        if (self.updatedWorry % self.worryTestValue) == 0:
+            return True
+        else:
+            return False
 
 monkeys = []
 for i in range(8):
     monkeys.append(MonkeyClass(instructions.allInventory[i],
-    instructions.allWorryOperation[i],
-    instructions.allWorryTest[i],
+    instructions.allWorryModification[i],
+    instructions.allWorryTestValue[i],
     instructions.allTrueMonkey[i],
     instructions.allFalseMonkey[i]))
 
+turns = 0
+while turns < 20:
+    turns += 1
+    for i in range(len(monkeys)):
+        if len(monkeys[i].inventory) == 0:
+            continue
+        else:
+            monkeys[i].initiateAction()
+
+monkeyBusiness = []
 for i in range(len(monkeys)):
-    monkeys[i].initiateAction()
+    monkeyBusiness.append(monkeys[i].monkeyInspections)
+
+monkeyBusiness.sort(reverse=True)
+monkeyBusinessValue = monkeyBusiness[0] * monkeyBusiness[1]
+print(monkeyBusinessValue)
