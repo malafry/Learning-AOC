@@ -57,15 +57,15 @@ class MonkeyClass:
     def initiateAction(self):
         for i in range(len(self.inventory)):
             self.monkeyInspections += 1
-            self.modifyWorry(self.inventory[i], self.worryModification)
+            self.modifyWorry(self.inventory[i])
             self.moveItem()
         self.inventory.clear()
 
-    def modifyWorry(self, inspectedItem, worryModification):
-        if 'old' in worryModification[5:]:
-            self.updatedWorry = eval('{} {} {}'.format(inspectedItem, worryModification[4], inspectedItem))
+    def modifyWorry(self, inspectedItem):
+        if 'old' in self.worryModification[5:]:
+            self.updatedWorry = eval('{} {} {}'.format(inspectedItem, self.worryModification[4], inspectedItem))
         else:
-            self.updatedWorry = eval('{} {} {}'.format(inspectedItem, worryModification[4], worryModification[6]))   
+            self.updatedWorry = eval('{} {} {}'.format(inspectedItem, self.worryModification[4], self.worryModification[6]))   
 
         self.updatedWorry = math.floor(self.updatedWorry / 3)
 
