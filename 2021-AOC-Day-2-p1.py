@@ -37,10 +37,13 @@ def valueEngine(hor, dep):
 
     print(hor * dep) # Correct answer: 1868935
 
+def callEngine():
+    instructionEngine(data)
+    movementEngine(instructions)
+    valueEngine(moveHorizontal, moveDepth)
+
 ## RUN ##
-instructionEngine(data)
-movementEngine(instructions)
-valueEngine(moveHorizontal, moveDepth)
+callEngine()
 
 ## PSEUDO ##
 '''
