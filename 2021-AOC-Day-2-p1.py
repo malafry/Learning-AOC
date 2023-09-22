@@ -4,7 +4,8 @@
 
 ## IMPORTS ##
 import re
-with open(r'C:\Users\malaf\OneDrive\Desktop\Workspace\Code\Learning\2021 AOC\2021-AOC-Day-2-Puzzle-input.txt') as file:
+my_file = (r'2021 AOC\2021-AOC-Day-2-Puzzle-input.txt')
+with open(my_file, "r") as file:
     data = [line.strip() for line in file]
 
 ## ENGINES ##
