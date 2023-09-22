@@ -11,7 +11,6 @@ with open(my_file, "r") as file:
 ## ENGINES ##
 instructions = []
 def instructionEngine(list):
-
     for i in range(len(list)):
         value = re.search(r'\d+', list[i])
         if 'forward' in list[i]:
@@ -35,7 +34,6 @@ def movementEngine(list):
             moveDepth -= list[i][1]
 
 def valueEngine(hor, dep):
-
     print(hor * dep) # Correct answer: 1868935
 
 def callEngine():
