@@ -3,7 +3,8 @@
 # Source: https://adventofcode.com/2021/day/1
 
 ## IMPORTS ##
-with open(r'C:\Users\malaf\OneDrive\Desktop\Workspace\Code\Learning\2021 AOC\2021-AOC-Day-1-Puzzle-input.txt') as file:
+my_file = (r'2021 AOC\2021-AOC-Day-1-Puzzle-input.txt')
+with open(my_file, "r") as file:
     data = [int(line.strip()) for line in file]
 
 ## SETUP
