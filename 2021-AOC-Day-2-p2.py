@@ -4,13 +4,13 @@
 
 ## IMPORTS ##
 import re
-with open(r'C:\Users\malaf\OneDrive\Desktop\Workspace\Code\Learning\2021 AOC\2021-AOC-Day-2-Puzzle-input.txt') as file:
+my_file = (r'2021 AOC\2021-AOC-Day-2-Puzzle-input.txt')
+with open(my_file, "r") as file:
     data = [line.strip() for line in file]
 
 ## ENGINES ##
 instructions = []
 def instructionEngine(list):
-
     for i in range(len(list)):
         value = re.search(r'\d+', list[i])
         if 'forward' in list[i]:
@@ -37,7 +37,6 @@ def movementEngine(list):
             moveAim -= list[i][1]
 
 def valueEngine(hor, dep):
-
     print(hor * dep) # Correct answer: 1965970888
 
 def callEngine():
