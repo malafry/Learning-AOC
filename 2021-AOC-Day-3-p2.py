@@ -28,12 +28,12 @@ def findCommonEngine(list, listSeparated):
         if meanNum > 0.5:
             mostCommon = 1
             leastCommon = 0
-        if meanNum == 0.5:
-            mostCommon = 1
-            leastCommon = 0
-        if meanNum < 0.5:
+        elif meanNum < 0.5:
             mostCommon = 0
             leastCommon = 1
+        else: # meanNum == 0.5
+            mostCommon = 1
+            leastCommon = 0        
         oxygenRate.append(mostCommon)
         co2Rate.append(leastCommon)
 
