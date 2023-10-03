@@ -9,10 +9,6 @@ with open(my_file, "r") as file:
     data = [line.strip() for line in file]
 
 ## ENGINES ##
-# 1 - Take data as the argument "list"
-# 2 - Create a separate list, where each element in the list is deconstructed by its digits,
-# such that the nth digit of every element is grouped as a subarray in a new list
-
 listSeparated = []
 def separatorEngine(list):
     
@@ -22,8 +18,6 @@ def separatorEngine(list):
             digitList.append(int(list[j][i]))
         listSeparated.append(digitList)
     findCommonEngine(list, listSeparated)
-
-# 1 - Find the OXYGEN and CO2: most and least common number in each nested array
 
 def findCommonEngine(list, listSeparated):
     oxygenRate = []
