@@ -17,16 +17,14 @@ def separatorEngine(data, token):
         
         columnBits = []        
         for j in range(len(data)):
+            if len(reductionList) == (len(data) - 1):
+                break
             if j not in reductionList:
                 columnBits.append(int(data[j][i]))
-        print("reductionList: {}".format(reductionList)) # TEST
-        print(" - i: {} ## columnBits: {}".format(i, columnBits)) # TEST
-        print(" - length of columnBits: {}".format(len(columnBits)))
+        if len(columnBits) > 0:
+            findCommonEngine(data, token, i, columnBits)
 
-        findCommonEngine(data, token, i, columnBits)
-
-        if i == len(data[0]) or (len(columnBits) == 1):
-            return findDecimalEngine(data)
+    return findDecimalEngine(data)
 
 def findCommonEngine(data, token, i, columnBits):
     bitFrequency = []
@@ -51,8 +49,7 @@ def findCommonEngine(data, token, i, columnBits):
 
     if token == "least":
         bitFrequency.append(leastCommon)
-    
-    print(" - bitFrequency: {}".format(bitFrequency)) # TEST
+
     reduceList(data, i, bitFrequency)
 
 def reduceList(data, i, bitFrequency):
@@ -62,36 +59,16 @@ def reduceList(data, i, bitFrequency):
             if data[j][i] != str(bitFrequency[0]):
                 reductionList.append(j)
 
-'''def reduceList(list, array):
-    bestMatch = []
-
-    for i in range(len(list)):
-        indexOfBreak = -1
-        for j in range(len(array)):
-            if list[i][j] != str(array[j]):
-                indexOfBreak = j
-                break
-        bestMatch.append(indexOfBreak - 1)
-
-    return list[bestMatch.index(max(bestMatch))]'''    
-
-## WORKING ON THIS FUNCTION CURRENTLY, but need to debug until I can print Success as per below...
-def findDecimalEngine(date):
-    return(1)
-'''    if len(data) == len(int(reductionList) + 1):
-        print("Success") # TEST
-        return(1)'''
-
-'''
-def findDecimal(oxygenRate, co2Rate):   
-    value = int(oxygenRate, 2) * int(co2Rate, 2)
-    print(value)
-'''
+def findDecimalEngine(data):
+    binary = -1
+    for i in range(len(data)):
+        if i not in reductionList:
+            binary = data[i]
+    return int(binary, 2)
 
 def runEngine(data):
-    print(separatorEngine(data, token = "most") * separatorEngine(data, token = "least"))
-    ## Currently, "most" returns None (unexpected), and "least" returns 1 (expected)
+    print("Result: {}".format(separatorEngine(data, token = "most") * separatorEngine(data, token = "least")))
 
 ## RUN ##
 reductionList = []
-runEngine(data)
+runEngine(data) # Answer: 2990784
