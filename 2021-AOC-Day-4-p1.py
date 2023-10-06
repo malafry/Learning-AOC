@@ -16,19 +16,38 @@ dataCopy = [item for item in data[1:] if item]
 # All boards will be 5x5, which means each index in dataCopy is a board row
 # Can divide length of dataset by 5 to determine the number of boards in dataCopy
 # Cannot create unique variables, so everything should be a separate nest within a board list
-print("Number of boards: {}".format(len(dataCopy)/5))
-
-boardList = []
-for i in range(len(dataCopy)):
-    count = 0
-#   ...
-#dataCopy[0:0+5]
-#dataCopy[+5:+5+5]
-#   ...
 
 ## ENGINES ##
+def createBoardsEngine(dataCopy, boardSize):
+    
+    boardList = []
+    for i in range(int(len(dataCopy) / boardSize)):
+        if i == 0:
+            count = 0
+        boardList.append(dataCopy[(count):(count + boardSize)])
+        count += boardSize
+
+    print("boardList at step 1: {}".format(boardList)) # TEST
+
+    for i in range(len(boardList)):
+        for j in range(len(boardList[0])):
+            boardList[i][j] = list(map(int, boardList[i][j].split()))
+
+    print("boardList at step 2: {}".format(boardList)) # TEST
+
+    boardKeys = []
+    for i in range(len(boardList)):
+        boardKeys.append("B{}".format(i + 1))
+    
+    boardDictionary = dict(zip(boardKeys, boardList))
+    
+    print("boardDictionary[B1] at step 3: {}".format(boardDictionary['B1'])) # TEST
+    print("boardDictionary[B2] at step 3: {}".format(boardDictionary['B2'])) # TEST
+    print("boardDictionary[B3] at step 3: {}".format(boardDictionary['B3'])) # TEST
+
 
 ## RUN ##
+createBoardsEngine(dataCopy, boardSize = 5)
 
 ## PSEUDOCODE ##
 '''
