@@ -3,6 +3,7 @@
 # Source: https://adventofcode.com/2021/day/4
 
 ## IMPORTS ##
+import re
 my_file = (r"2021 AOC\2021-AOC-Day-4-Puzzle-input.txt")
 with open(my_file, "r") as file:
     data = [line.strip() for line in file]
@@ -32,8 +33,20 @@ def createBoardsEngine(dataCopy, boardSize):
     global boardDictionary
     boardDictionary = dict(zip(boardKeys, boardList))
     
+    rcKeys = []
+    for r in range(5):
+        rcKeys.append("R{}".format(r + 1))
+    for c in range(5):
+        rcKeys.append("C{}".format(c + 1))
+    
     global resultsLog
     resultsLog = dict.fromkeys(boardKeys, [])
+    for i in range(len(resultsLog)):
+        resultsLog['B{}'.format(i + 1)] = dict.fromkeys(rcKeys, [])
+
+    #global countTracker
+    #for i in range(boardList):
+    #    pass
 
     print("boardDictionary[B1] at step 3: {}".format(boardDictionary['B1'])) # TEST
     print("boardDictionary[B2] at step 3: {}".format(boardDictionary['B2'])) # TEST
@@ -45,14 +58,17 @@ def instructionEngine(instructions):
             for row in range(len(boardDictionary['B{}'.format(b + 1)])): #5 rows
                 for col in range(len(boardDictionary['B{}'.format(b + 1)][row])): #5 cols
                     if int(instructions[i]) == boardDictionary['B{}'.format(b + 1)][row][col]:
+                        checkEngine()
                         #boardDictionary['B{}'.format(b + 1)][row][col] = '*'
-                        resultsLog['B{}'.format(b + 1)].append("R{} C{}".format(row, col))
+                        #resultsLog['B{}'.format(b + 1)].append("R{} C{}".format(row, col))
                         # Both lines above likely work, but I need to determine whether a Bingo is made each iteration
                         # Try to use the checkEngine() as a test
-                        checkEngine()
+                        
 
 def checkEngine():
     pass
+#    for b in range(len(resultsLog['B{}'.format(b + 1)])): # 3 logs
+    
     # Start here.
     # Consider a regex looking for five row Ns or five col Ns (if using the resultsLog)
     # Otherwise, consider a regex looking for an asterix ... might not be as easy as above.
