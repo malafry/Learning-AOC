@@ -33,84 +33,41 @@ def createBoardsEngine(dataCopy, boardSize):
     global boardDictionary
     boardDictionary = dict(zip(boardKeys, boardList))
     
-    rcKeys = []
-    for r in range(5):
-        rcKeys.append("R{}".format(r + 1))
-    for c in range(5):
-        rcKeys.append("C{}".format(c + 1))
-    
     global resultsLog
-    resultsLog = dict.fromkeys(boardKeys, [])
-    for i in range(len(resultsLog)):
-        resultsLog['B{}'.format(i + 1)] = dict.fromkeys(rcKeys, [])
-
-    #global countTracker
-    #for i in range(boardList):
-    #    pass
-
-    print("boardDictionary[B1] at step 3: {}".format(boardDictionary['B1'])) # TEST
-    print("boardDictionary[B2] at step 3: {}".format(boardDictionary['B2'])) # TEST
-    print("boardDictionary[B3] at step 3: {}".format(boardDictionary['B3'])) # TEST
+    resultsLog = []
+    for i in range(len(boardDictionary)):
+        resultsLog.append([])
 
 def instructionEngine(instructions):
     for i in range(len(instructions)): # 27 instructions
         for b in range(len(boardDictionary)): # 3 boards
             for row in range(len(boardDictionary['B{}'.format(b + 1)])): #5 rows
                 for col in range(len(boardDictionary['B{}'.format(b + 1)][row])): #5 cols
-                    if int(instructions[i]) == boardDictionary['B{}'.format(b + 1)][row][col]:
-                        checkEngine()
-                        #boardDictionary['B{}'.format(b + 1)][row][col] = '*'
-                        #resultsLog['B{}'.format(b + 1)].append("R{} C{}".format(row, col))
-                        # Both lines above likely work, but I need to determine whether a Bingo is made each iteration
-                        # Try to use the checkEngine() as a test
-                        
+                    if int(instructions[i]) == (boardDictionary['B{}'.format(b + 1)][row][col]):
+                        boardDictionary['B{}'.format(b + 1)][row][col] = ''
+                        resultsLog[b].append("R{}".format(row + 1))
+                        resultsLog[b].append("C{}".format(col + 1))
+                        if (checkEngine(resultsLog, b) == True):
+                            key = "B{}".format(b + 1)
+                            winningPoints = int(instructions[i])* (int(sum([num for sublist in boardDictionary[key] for num in sublist if isinstance(num, int)])))
+                            return(print("Winning board: {}. Last value: {}. Winning points: {}. i: {}".format((b + 1), instructions[i], winningPoints, i)))                        
 
-def checkEngine():
-    pass
-#    for b in range(len(resultsLog['B{}'.format(b + 1)])): # 3 logs
-    
-    # Start here.
-    # Consider a regex looking for five row Ns or five col Ns (if using the resultsLog)
-    # Otherwise, consider a regex looking for an asterix ... might not be as easy as above.
-    # The trick will be doing the calculation.
+def checkEngine(resultsLog, board):
+    count = 0
+    pattern = ['R1', 'R2', 'R3', 'R4', 'R5', 'C1', 'C2', 'C3', 'C4', 'C5']
+    for j in range(len(pattern)):
+        logTemp = ', '.join(resultsLog[board])
+        count = len(re.findall(pattern[j], logTemp))
+        if count == 5:
+            return True
+        else:
+            return False
 
 def runEngine(boardSize):
     createBoardsEngine(dataCopy, boardSize)
     instructionEngine(instructions)
 
-    # TESTS
-    print("resultsLog[B1]: {}".format(resultsLog['B1'])) # TEST
-    print("resultsLog[B2]: {}".format(resultsLog['B2'])) # TEST
-    print("resultsLog[B3]: {}".format(resultsLog['B3'])) # TEST 
-    print("boardDictionary[B1]: {}".format(boardDictionary['B1'])) # TEST
-    print("boardDictionary[B2]: {}".format(boardDictionary['B2'])) # TEST
-    print("boardDictionary[B3: {}".format(boardDictionary['B3'])) # TEST
-
 ## RUN ##
 runEngine(boardSize = 5)
 
 ## PSEUDOCODE ##
-'''
-Create a list of directions from the first row in data
-
-Create three arrays to represent three boards (5x5) in data:
-> boardOne; boardTwo; boardThree
-> Each array is nested; each index is one row; each sub-index is a column
-> i = row, j = column, so that boardOne[i/row][j/column] => boardOne[1][2] => row 1 column 2
-
-Create three arrays to represent the counts; when count = 5, winner:
-> boardOneResult; boardTwoResult; boardThreeResult
-> row1...row5, col1...5
-
-Create a function to parse directions
-
-Create a function to search arrays (boards) for value
-> if a value is found, the index is returned
-
-Create a function to track counts
-> the returned index is added to the results, where:
-> value of i = 1 goes to row1; value of j = 2 goes to col2
-
-Create a function to assess when a row or a column has 5 
-> Iterates through rows and columns until a value of 5 is identified
-'''
