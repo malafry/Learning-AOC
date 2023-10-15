@@ -44,28 +44,36 @@ def createBoardsEngine(dataCopy, boardSize):
 def instructionEngine(instructions):
     for i in range(len(instructions)): # 27 instructions
         for b in range(len(boardDictionary)): # 3 boards
-            if (b in winningBoards):
-                skip
+            if (('B{}').format(b + 1) in winningBoards):
+                print("Break @ i ({}) with board B{}".format(i, (b + 1)))
+                continue
             for row in range(len(boardDictionary['B{}'.format(b + 1)])): #5 rows
                 for col in range(len(boardDictionary['B{}'.format(b + 1)][row])): #5 cols
                     if int(instructions[i]) == (boardDictionary['B{}'.format(b + 1)][row][col]):
                         boardDictionary['B{}'.format(b + 1)][row][col] = ''
                         resultsLog[b].append("R{}".format(row + 1))
                         resultsLog[b].append("C{}".format(col + 1))
-                        if (checkEngine(resultsLog, b) == True):
-                            print(winningBoards)
+                        if (checkEngine(resultsLog, b, i) == True):
+                            print("Test: {}".format(winningBoards)) # TEST
                             key = "B{}".format(b + 1)
                             winningPoints = int(instructions[i])* (int(sum([num for sublist in boardDictionary[key] for num in sublist if isinstance(num, int)])))
-                            return(print("Winning board: {}. Last value: {}. Winning points: {}. i: {}".format((b + 1), instructions[i], winningPoints, i)))                        
+                            return(print("Last winning board: {}. Last value: {}. Winning points: {}. i: {}".format((b + 1), instructions[i], winningPoints, i)))                        
 
-def checkEngine(resultsLog, board):
+def checkEngine(resultsLog, board, iter):
     count = 0
     pattern = ['R1', 'R2', 'R3', 'R4', 'R5', 'C1', 'C2', 'C3', 'C4', 'C5']
     for j in range(len(pattern)):
         logTemp = ', '.join(resultsLog[board])
         count = len(re.findall(pattern[j], logTemp))
+        if iter == 15: # iter 14 = 13 instruction # TEST
+            print(len(winningBoards)) # TEST
+            print(len(boardDictionary)) # TEST
         if count == 5:
             winningBoards.append("B{}".format(board + 1))
+            print("Winning boards: {} @ i: {} = {}".format(winningBoards, iter, instructions[iter])) # TEST
+            if iter == 14: # iter 14 = 13 instruction # TEST
+                print(len(winningBoards)) # TEST
+                print(len(boardDictionary)) # TEST
             if (len(winningBoards) == len(boardDictionary)):
                 return True
         else:
