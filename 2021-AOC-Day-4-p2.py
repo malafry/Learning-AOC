@@ -44,34 +44,35 @@ def createBoardsEngine(dataCopy, boardSize):
 def instructionEngine(instructions):
     for i in range(len(instructions)): # 27 instructions
         for b in range(len(boardDictionary)): # 3 boards
-            if (('B{}').format(b + 1) in winningBoards):
-                #print("Continue statement @ i ({}) with board B{}".format(i, (b + 1))) # TEST
+            board = 'B{}'.format(b + 1)
+            if (board in winningBoards):
                 continue
-            for row in range(len(boardDictionary['B{}'.format(b + 1)])): #5 rows
-                for col in range(len(boardDictionary['B{}'.format(b + 1)][row])): #5 cols
-                    if int(instructions[i]) == (boardDictionary['B{}'.format(b + 1)][row][col]):
-                        boardDictionary['B{}'.format(b + 1)][row][col] = ''
-                        resultsLog[b].append("R{}".format(row + 1))
-                        resultsLog[b].append("C{}".format(col + 1))
-                        if (checkEngine(resultsLog, b, i) == True):
-                            key = "B{}".format(b + 1)
-                            winningPoints = int(instructions[i])* (int(sum([num for sublist in boardDictionary[key] for num in sublist if isinstance(num, int)])))
-                            return(print("Last winning board: {}. Last value: {}. Winning points: {}. i: {}".format((b + 1), instructions[i], winningPoints, i)))                        
-                            # LAST WINNING BOARD should be: i: 14 = 13
+            else:
+                for row in range(len(boardDictionary[board])): #5 rows
+                    for col in range(len(boardDictionary[board][row])): #5 cols
+                        if int(instructions[i]) == boardDictionary[board][row][col]: # Can't use int() with boardDictionary because of line below
+                            boardDictionary[board][row][col] = ''
+                            resultsLog[b].append("R{}".format(row + 1))
+                            resultsLog[b].append("C{}".format(col + 1))
+                            print("{} : {}".format(i, resultsLog[b]))
+                            if (checkEngine(resultsLog, board, b, i) == True):
+                                winningPoints = int(instructions[i])* (int(sum([num for sublist in boardDictionary[board] for num in sublist if isinstance(num, int)])))
+                                return(print("Last winning board: {}. Last value: {}. Winning points: {}. i: {}".format(board, instructions[i], winningPoints, i)))                        
+                                # LAST WINNING BOARD should be: i: 14 = 13
 
-def checkEngine(resultsLog, board, iter):
+def checkEngine(resultsLog, board, b, iter):
     count = 0
     pattern = ['R1', 'R2', 'R3', 'R4', 'R5', 'C1', 'C2', 'C3', 'C4', 'C5']
     for j in range(len(pattern)):
-        logTemp = ', '.join(resultsLog[board])
+        logTemp = ', '.join(resultsLog[b - 1])
         count = len(re.findall(pattern[j], logTemp))
         if count == 5:
-            winningBoards.append("B{}".format(board + 1))
+            winningBoards.append(board)
             print("Winning boards: {} @ i: {} = {}".format(winningBoards, iter, instructions[iter])) # TEST
             if iter == 14: # iter 14 = 13 instruction # TEST
                 print("winningBoards @ i 14: {}".format(len(winningBoards))) # TEST
                 print("boardDictionary @ i 14: {}".format(len(boardDictionary))) # TEST
-                # ITER 14 is not being printed, so count == 5 @ iter 5.
+                # ITER 14 is not being printed, so count != 5 @ iter 14.
             if (len(winningBoards) == len(boardDictionary)):
                 return True
         else:
@@ -83,5 +84,3 @@ def runEngine(boardSize):
 
 ## RUN ##
 runEngine(boardSize = 5)
-
-## PSEUDOCODE ##
