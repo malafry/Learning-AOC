@@ -51,7 +51,6 @@ sum = 0
 
 for i in range(len(data)):
     dataEnds = frontNum(data, i) + backNum(data, i)
-    print("{}: {}".format(i+1, dataEnds))
     sum += int(dataEnds)
 
 print(sum)
