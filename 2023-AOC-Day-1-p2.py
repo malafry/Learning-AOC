@@ -11,9 +11,6 @@ input = pathlib.Path('Learning') / '2023 AOC' / '2023-AOC-Day-1-Puzzle-input.txt
 with open(input, "r") as file:
     data = [line.strip() for line in file]
 
-with open(input, "r") as file:
-    data2 = [line.strip() for line in file]
-
 lookUp = [["one", "1"], ["two", "2"], ["three", "3"], ["four", "4"], ["five", "5"], ["six", "6"], ["seven", "7"], ["eight", "8"], ["nine", "9"]]
 
 sum = 0
