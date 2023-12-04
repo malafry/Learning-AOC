@@ -35,6 +35,9 @@ def runGameData(gameData, i):
             if 'green' in gameData[gameKey][n1][n2]:
                 greenSum += int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
     
+    # TESTS
+    print("GAME {}: Red: {}. Blue: {}. Green: {}".format(gameKey, redSum, blueSum, greenSum))
+
     checkWin(redSum, blueSum, greenSum, gameKey)
 
 def checkWin(redSum, blueSum, greenSum, gameKey):
@@ -46,13 +49,22 @@ def checkWin(redSum, blueSum, greenSum, gameKey):
     if greenSum <= gameRules['green']:
        win += 1
     
+    # TEST
+    print("Win value: {}".format(win))
+
     if win == 3:
         gamesWonID.append(gameKey)
+
+        # TEST
+        print("WIN!!! {}".format(win))
 
 # ENGINE
 gameRules = {'red': 12, 'green': 13, 'blue': 14}
 gamesWonID = list()
 winValue = 0
+
+# TEST
+#winCount = 0
 
 for i in range(len(input)):
     setupGameData(input, i)
@@ -62,3 +74,4 @@ for i in range(len(gamesWonID)):
     winValue += int(gamesWonID[i])
 
 print("Value of winning games: {}".format(winValue)) # WRONG: 149 (too low)
+print(gamesWonID)
