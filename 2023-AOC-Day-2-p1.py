@@ -8,7 +8,7 @@ import re
 
 input = pathlib.Path('Learning') / '2023 AOC' / '2023-AOC-Day-2-Puzzle-input.txt'
 
-with open(input, "r") as file:
+with open(input, 'r') as file:
     input = [line.strip() for line in file]
 
 gameData = dict()
@@ -24,29 +24,29 @@ def setupGameData(input, i):
 def runGameData(gameData, i):
     gameKey = str(i + 1)
     redSum = 0
-    blueSum = 0
     greenSum = 0
+    blueSum = 0
     for n1 in range(len(gameData[gameKey])):
         for n2 in range(len(gameData[gameKey][n1])):
             if 'red' in gameData[gameKey][n1][n2]:
                 redSum += int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
-            if 'blue' in gameData[gameKey][n1][n2]:
-                blueSum += int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
             if 'green' in gameData[gameKey][n1][n2]:
                 greenSum += int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
+            if 'blue' in gameData[gameKey][n1][n2]:
+                blueSum += int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
     
     # TESTS
-    print("GAME {}: Red: {}. Blue: {}. Green: {}".format(gameKey, redSum, blueSum, greenSum))
+    print("GAME {}: Red: {}. Green: {}. Blue: {}.".format(gameKey, redSum, greenSum, blueSum))
 
-    checkWin(redSum, blueSum, greenSum, gameKey)
+    checkWin(gameKey, redSum, greenSum, blueSum)
 
-def checkWin(redSum, blueSum, greenSum, gameKey):
+def checkWin(gameKey, redSum, greenSum, blueSum):
     win = 0
     if redSum <= gameRules['red']:
        win += 1
-    if blueSum <= gameRules['blue']:
-       win += 1
     if greenSum <= gameRules['green']:
+       win += 1
+    if blueSum <= gameRules['blue']:
        win += 1
     
     # TEST
@@ -56,7 +56,7 @@ def checkWin(redSum, blueSum, greenSum, gameKey):
         gamesWonID.append(gameKey)
 
         # TEST
-        print("WIN!!! {}".format(win))
+        print("WIN!\n\n")
 
 # ENGINE
 gameRules = {'red': 12, 'green': 13, 'blue': 14}
