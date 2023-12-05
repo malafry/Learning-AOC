@@ -29,11 +29,14 @@ def runGameData(gameData, i):
     for n1 in range(len(gameData[gameKey])):
         for n2 in range(len(gameData[gameKey][n1])):
             if 'red' in gameData[gameKey][n1][n2]:
-                redSum += int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
+                if redSum < int(re.search(r'\d+', gameData[gameKey][n1][n2]).group()):
+                    redSum = int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
             if 'green' in gameData[gameKey][n1][n2]:
-                greenSum += int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
+                if greenSum < int(re.search(r'\d+', gameData[gameKey][n1][n2]).group()):
+                    greenSum = int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
             if 'blue' in gameData[gameKey][n1][n2]:
-                blueSum += int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
+                if blueSum < int(re.search(r'\d+', gameData[gameKey][n1][n2]).group()):
+                    blueSum = int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
     
     # TESTS
     print("GAME {}: Red: {}. Green: {}. Blue: {}.".format(gameKey, redSum, greenSum, blueSum))
