@@ -1,6 +1,6 @@
 # Advent of Code
-# Day 2 - Part 1
-# Source: https://adventofcode.com/2023/day/2
+# Day 2 - Part 2
+# Source: https://adventofcode.com/2023/day/2#part2
 
 ## SETUP
 import pathlib
@@ -35,30 +35,19 @@ def runGameData(gameData, i):
             if 'blue' in gameData[gameKey][n1][n2]:
                 if blueSum < int(re.search(r'\d+', gameData[gameKey][n1][n2]).group()):
                     blueSum = int(re.search(r'\d+', gameData[gameKey][n1][n2]).group())
-    checkWin(gameKey, redSum, greenSum, blueSum)
+    calcScore(redSum, greenSum, blueSum)
 
-def checkWin(gameKey, redSum, greenSum, blueSum):
-    win = 0
-    if redSum <= gameRules['red']:
-       win += 1
-    if greenSum <= gameRules['green']:
-       win += 1
-    if blueSum <= gameRules['blue']:
-       win += 1
-
-    if win == 3:
-        gamesWonID.append(gameKey)
+def calcScore(redSum, greenSum, blueSum):
+    gameScore.append(redSum * greenSum * blueSum)
 
 # ENGINE
-gameRules = {'red': 12, 'green': 13, 'blue': 14}
-gamesWonID = list()
+gameScore = list()
 winValue = 0
-
 for i in range(len(input)):
     setupGameData(input, i)
     runGameData(gameData, i)
 
-for i in range(len(gamesWonID)):
-    winValue += int(gamesWonID[i])
+for i in range(len(gameScore)):
+    winValue += int(gameScore[i])
 
 print("Value of winning games: {}".format(winValue))
