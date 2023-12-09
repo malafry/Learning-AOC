@@ -19,7 +19,6 @@ def cardEngine(input, i):
     actualPattern = r'(?<= \| )\d+(?: \d+)*'
     cardActualValues = re.split(' ', re.search(actualPattern, processedInput).group())
 
-    #print(i, cardWinValues, cardActualValues) # TEST
     runCardData(cardWinValues, cardActualValues)
 
 def runCardData(cardWinValues, cardActualValues):
@@ -31,7 +30,6 @@ def runCardData(cardWinValues, cardActualValues):
                 winningNumbers.append(cardWinValues[j])
     if len(winningNumbers) > 0: # Without this, an empty list was adding 1/2 point each
         points += (2**(len(winningNumbers) - 1))
-    #print(winningNumbers, points) # TEST
 
 ## ENGINE
 points = 0
