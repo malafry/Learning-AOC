@@ -28,7 +28,7 @@ def runCardData(cardWinValues, cardActualValues):
         for j in range(len(cardWinValues)):
             if cardWinValues[j] == cardActualValues[i]:
                 winningNumbers.append(cardWinValues[j])
-    if len(winningNumbers) > 0: # Without this, an empty list was adding 1/2 point each
+    if len(winningNumbers) > 0:
         points += (2**(len(winningNumbers) - 1))
 
 ## ENGINE
