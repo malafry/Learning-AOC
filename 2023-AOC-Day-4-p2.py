@@ -22,7 +22,7 @@ def cardSetup(input, set_i):
     cardData.append([cardKey, cardWinValues, cardActualValues])
 
 def runCardData(cardData, run_i):
-    global totalCards, checkList
+    global totalCards
     winningNumbers = list()
     totalCards += 1
 
