@@ -5,49 +5,62 @@
 ## SETUP
 import pathlib
 import re
+from collections import Counter
 
 input = pathlib.Path('Learning') / '2023 AOC' / '2023-AOC-Day-4-Puzzle-input.txt'
 
 with open(input, 'r') as file:
     input = [line.strip() for line in file]
 
-def cardSetup(input, i):
-    cardKey = int(re.search(r'\d+(?=:)', input[i]).group()) # also == (i + 1)
-    processedInput = re.sub('  ', ' ', input[i])
+def cardSetup(input, set_i):
+    cardKey = int(re.search(r'\d+(?=:)', input[set_i]).group()) # also == (i + 1)
+    processedInput = re.sub('  ', ' ', input[set_i])
     winPattern = r'(?<=: )\d+(?: \d+)*(?= \|)'
     cardWinValues = re.split(' ', re.search(winPattern, processedInput).group())
     actualPattern = r'(?<= \| )\d+(?: \d+)*'
     cardActualValues = re.split(' ', re.search(actualPattern, processedInput).group())
     cardData.append([cardKey, cardWinValues, cardActualValues])
 
-def runCardData(cardData, i):
-    global points
-
+def runCardData(cardData, run_i):
+    global totalCards, checkList
+    totalCards += 1
     winningNumbers = list()
-    
-    print("\nrunCardData called on original index {}".format(i))
+    checkList.append(run_i + 1) # TEST
+    print(totalCards, checkList) # TEST
 
-    for win in range(len(cardData[i][1])): # cardWinValues
-        for actual in range(len(cardData[i][2])): # cardActualValues
-            if cardData[i][1][win] == cardData[i][2][actual]:
-                    winningNumbers.append(cardData[i][1][win])
-  
-    print("# winning numbers: {}, (current points: {})".format(winningNumbers, points))
-    if len(winningNumbers) > 0:
-        points += 1
+    ## MESS WITH THIS A LITTLE?
+    for winNum in range(len(cardData[run_i][1])): # cardWinValues
+        for actualNum in range(len(cardData[run_i][2])): # cardActualValues
+            if cardData[run_i][1][winNum] == cardData[run_i][2][actualNum]:
+                winningNumbers.append(cardData[run_i][1][winNum])
+
+    for winNum in range(len(cardData[run_i][1])): # cardWinValues
+        for actualNum in range(len(cardData[run_i][2])): # cardActualValues
+            if cardData[run_i][1][winNum] == cardData[run_i][2][actualNum]:
+                winningNumbers.append(cardData[run_i][1][winNum])
+            # if cardData[run_i][1][winNum] == cardData[run_i][2][actualNum]:
+            #     winningNumbers.append(cardData[run_i][1][winNum])
+    
+    if winningNumbers:
         for wins in range(len(winningNumbers)):
-            if (i + 1 + (wins + 1)) <= len(cardData):
-                print("## runCardData (i {}) recursion called on wins {}".format(i, i + (wins + 1)))
-                runCardData(cardData, i + (wins + 1))
+            if wins == 2:
+                print("\n\nWINWINWIN")
+            if (wins + 1 + run_i) == len(cardData):
+                break
+            else:
+                runCardData(cardData, (run_i + 1))
 
 ## ENGINE
-points = 0
+totalCards = int()
 cardData = list()
+checkList = list()
 
-for i in range(len(input)):
-    cardSetup(input, i)
+for set_i in range(len(input)):
+    cardSetup(input, set_i)
 
-for i in range(len(cardData)):
-    runCardData(cardData, i)
+for run_i in range(len(cardData)):
+    runCardData(cardData, run_i)
 
-print("\nTotal card points: {}".format(points))
+print("\nTotal cards: {}".format(totalCards))
+count = Counter(checkList)
+print("Card 1: {} (1) -- Card 2: {} (2) -- Card 3: {} (4) -- Card 4: {} (8) -- Card 5: {} (15) -- Card 6: {} (1)".format(count[1], count[2], count[3], count[4], count[5], count[6]))
