@@ -37,11 +37,3 @@ for i in range(len(raceData['time'])):
     distance(i, raceData['time'][i], raceData['record_distance'][i])
 
 print("Score: {}. Winning total: {}.".format(scores, scores[0] * scores[1] * scores[2] * scores[3]))
-
-'''
-time = x
-record_distance = y
-speed = time_held
-time_moving = time_held
-possibilities = time
-'''
