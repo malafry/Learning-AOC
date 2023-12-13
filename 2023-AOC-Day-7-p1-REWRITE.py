@@ -20,8 +20,6 @@ def setupPlays(input):
     for hand in plays:
         handType(hand)
         cardStrength(hand)
-
-    for hand in plays:
         hand['raw_score'] = int(''.join(hand['hand_strength']))
 
 def handType(hand):
