@@ -4,7 +4,6 @@
 
 ## SETUP
 import pathlib
-from collections import Counter
 
 input = pathlib.Path('Learning') / '2023 AOC' / '2023-AOC-Day-8-Puzzle-input.txt'
 
@@ -34,9 +33,6 @@ def run(directions, network, location, step):
         run(directions, network, location, step)
     if location == 'ZZZ':
         print(step)
-
-def continueRun(step):
-    pass
 
 ## ENGINE
 directions = list()
