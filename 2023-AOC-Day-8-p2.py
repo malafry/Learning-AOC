@@ -11,7 +11,7 @@ with open(input, 'r') as file:
     input = [line.strip() for line in file]
 
 def setup(input, start, directions, networkStartList):
-    directions = input[0]
+    directions = list(input[0])
     network = list()
     for node in input[2:]:
         key = node.split('=')[0].strip()
@@ -28,27 +28,37 @@ def setup(input, start, directions, networkStartList):
             networkStartList.append(nodeKey)
 
 def run(directions, networkStartList, step, totalSteps):  
-    for i, key in enumerate(networkStartList):
+    for key in networkStartList:
         location = key
-        for dir in directions[:]:
-            if dir == 'L':
-                location = networkDict[location][0]
-                print(location) # TEST
-                step += 1
-            if dir == 'R':
-                location = networkDict[location][1]
-                print(location) # TEST
-                step += 1
-            if 'Z' in location:
-                networkStartList.pop(i)
-                totalSteps.append(step)
-                step = int()
-                break
-
+        repeat = True
+        print('1')
+        print(directions[:])
+        while repeat:
+            for dir in directions[:]:
+                print(dir)
+                if dir == 'L':
+                    print('L')
+                    location = networkDict[location][0]
+                    print(location) # TEST
+                    step += 1
+                if dir == 'R':
+                    print('R')
+                    location = networkDict[location][1]
+                    print(location) # TEST
+                    step += 1
+                if 'Z' in location:
+                    print('Z')
+                    networkStartList.remove(key)
+                    totalSteps.append(step)
+                    step = int()
+                    repeat = False
+    
     if networkStartList:
+        print('2')
         run(directions, networkStartList, step, totalSteps)
     else:
-        return(totalSteps)
+        print('3')
+        print(totalSteps)
 
 ## ENGINE
 start = 'A' # A sample, Z real
@@ -57,6 +67,6 @@ networkStartList = list()
 step = int()
 totalSteps = list()
 networkDict = dict()
-
 setup(input, start, directions, networkStartList)
 run(directions, networkStartList, step, totalSteps)
+print(networkStartList)
